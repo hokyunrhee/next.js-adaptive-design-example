@@ -1,4 +1,5 @@
 import App from "next/app";
+import { useEffect } from "react";
 import { mobileDetect } from "../utils/mobile-detect";
 
 import { ChakraProvider, Box } from "@chakra-ui/react";
@@ -9,17 +10,19 @@ function MyApp({ Component, pageProps }) {
   if (typeof window !== "undefined" && pageProps.hasOwnProperty("isMobile")) {
     window.isMobile = pageProps.isMobile;
   }
+
+  useEffect(() => {
+    let src = document.querySelector("#src");
+    let script = document.querySelector(`script[src*="pay.naver.com"]`);
+    src.textContent = script.src;
+  }, []);
+
   return (
     <ChakraProvider resetCSS theme={theme}>
-      <Box
-        as="main"
-        p="32px"
-        flexGrow="1"
-        display="flex"
-        flexDirection="column"
-      >
+      <Box as="main" p="32px" display="flex" flexDirection="column">
         <Header />
         <Component {...pageProps} />
+        <div id="src"></div>
       </Box>
     </ChakraProvider>
   );
