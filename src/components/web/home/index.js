@@ -1,0 +1,5 @@
+import { Text } from "@chakra-ui/react";
+
+export default function Home() {
+  return <Text as="span">Web</Text>;
+}
